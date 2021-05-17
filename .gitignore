@@ -2,3 +2,6 @@
 
 # Environment variables
 .env
+
+# Cliente REST
+.rest

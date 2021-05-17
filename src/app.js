@@ -1,4 +1,4 @@
-import express, { json } from 'express';
+import express from 'express';
 import ProjectsRoutes from './routes/projects.routes';
 
 const app = express()
@@ -8,6 +8,7 @@ app.set('port', process.env.PORT || 3000)
 
 // Para entender métodos JSON
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 // Routes
 app.get('/', (req, res) => {
