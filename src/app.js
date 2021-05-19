@@ -1,5 +1,6 @@
 import express from 'express';
 import ProjectsRoutes from './routes/projects.routes';
+import TecnologiesRoutes from './routes/tecnolgies.routes';
 
 const app = express()
 
@@ -27,5 +28,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/proyectos', ProjectsRoutes)
+app.use('/api/tecnologias', TecnologiesRoutes)
 
 export default app
