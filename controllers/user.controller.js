@@ -71,7 +71,7 @@ const usuarioDelete = async(req, res = response) => {
     const usuario = await Usuario.findByIdAndUpdate(id, { state: false });
 
     res.json({
-        msg: 'Usuario inhabilitado'
+        msg: 'Usuario inhabilitado correctamente'
     })
 }
 
