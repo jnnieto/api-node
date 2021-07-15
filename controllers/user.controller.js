@@ -70,8 +70,12 @@ const usuarioDelete = async(req, res = response) => {
 
     const usuario = await Usuario.findByIdAndUpdate(id, { state: false });
 
+    const usuarioAutenticado = req.usuario;
+
     res.json({
-        msg: 'Usuario inhabilitado correctamente'
+        msg: 'Usuario inhabilitado correctamente',
+        usuario,
+        usuarioAutenticado
     })
 }
 
