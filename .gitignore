@@ -1,7 +1,1 @@
-/node_modules
-
-# Environment variables
-.env
-
-# Cliente REST
-.rest
+node_modules/
