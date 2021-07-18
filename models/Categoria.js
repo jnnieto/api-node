@@ -7,16 +7,16 @@ const CategoriaSchema = Schema({
             true,
             'El nombre es obligatorio'
         ],
-        state: {
-            type: Boolean,
-            required: true, 
-            default: true
-        },
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'Usuario',
-            required: true
-        }
+    },
+    state: {
+        type: Boolean,
+        required: true, 
+        default: true
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
     }
 });
 
