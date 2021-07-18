@@ -20,4 +20,10 @@ const CategoriaSchema = Schema({
     }
 });
 
+// Pära ocultar la contraseña y _v en la response de la petición
+CategoriaSchema.methods.toJSON = function() {
+    const { __v,...categoria } = this.toObject();
+    return categoria;
+}
+
 module.exports = model('Categoria', CategoriaSchema);

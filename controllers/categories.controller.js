@@ -13,7 +13,7 @@ const obtenerCategorias = async (req, res = response) => {
         Categoria.find(query)
         .limit(Number(limite))
         .skip(Number(desde))
-        .populate('user')
+        .populate('user', 'name')
 
     ]);
 
@@ -75,7 +75,7 @@ const actualizarCategoria = async (req, res = response) => {
     }
 
     const categoria = await Categoria.findByIdAndUpdate(id, data)
-                                    .populate('user');
+                                    .populate('user', 'name');
 
     res.json({
         msg: 'Categoria actualizada correctamente',
