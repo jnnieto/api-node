@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { obtenerProductos, crearProducto, obtenerProductoId, actualizarProducto, eliminarProducto } = require('../controllers/product.controller');
-const { existeCategoria } = require('../helpers/db-validators');
+const { existeCategoria, existeProductoId } = require('../helpers/db-validators');
 
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
@@ -9,12 +9,12 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const router = Router();
 
 //Obtener los productos paginados - publico
-router.get('/', [
-    validarCampos
-], obtenerProductos);
+router.get('/', obtenerProductos);
 
 // Obtener un producto por id
 router.get('/:id', [
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom(existeProductoId),
     validarCampos
 ], obtenerProductoId);
 

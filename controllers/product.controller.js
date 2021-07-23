@@ -5,9 +5,36 @@ const Producto = require('../models/Producto');
 
 const obtenerProductos = async (req = request, res = response) => {
 
+  const { limite = 5, desde = 0 } = req.query;
+  const query = { state: true }
+
+  // Ejecutar ambas promesas de forma simultanea y asíncrona
+  const [ total, productos ] = await Promise.all([
+      Producto.countDocuments(query),
+      Producto.find(query)
+      .limit(Number(limite))
+      .skip(Number(desde))
+      .populate('user', 'name')
+      .populate('category', 'name')
+
+  ]);
+
+  res.json({
+      total,
+      productos
+  });
+
 }
 
 const obtenerProductoId = async (req = request, res = response) => {
+
+  const { id } = req.params;
+
+  const producto = await Producto.findById(id)
+                          .populate('user', 'name')
+                          .populate('category', 'name')
+
+  res.json(producto);
 
 }
 
