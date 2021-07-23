@@ -20,7 +20,7 @@ router.put('/:id', [
 ], usuarioPut)
 router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
-    check('password', 'La constraseña es obligatorio y debe tener más de 6 letras').isLength({min: 6}),
+    check('password', 'La contraseña es obligatorio y debe tener más de 6 letras').isLength({min: 6}),
     check('email', 'El correo no es válido').isEmail(),
     check('email').custom(emailExiste),
     // check('role', 'No es un rol permitido').isIn([ 'ADMIN_ROLE', 'USER_ROLE' ]),

@@ -1,9 +1,10 @@
-const Categoria = require('../models/Categoria')
-const Role = require('../models/Role'); 
+const Categoria = require('../models/Categoria');
+const Producto = require('../models/Producto');
+const Role = require('../models/Role');
 const Usuario = require('../models/Usuario');
 
 const esRolValido = async(role = '') => {
-    // Encuentra coincidencias con algún rol registrado en la base de datos 
+    // Encuentra coincidencias con algún rol registrado en la base de datos
     const isRole = await Role.findOne({ role });
     if (!isRole) {
         throw new Error(`El rol ${ role } no está resgistrado en la base de datos`)
@@ -11,7 +12,7 @@ const esRolValido = async(role = '') => {
 }
 
 const emailExiste = async(email = '') => {
-    
+
     const isEmail = await Usuario.findOne({ email });
     if (isEmail) {
         throw new Error(`El correo ya existe`);
@@ -20,7 +21,7 @@ const emailExiste = async(email = '') => {
 }
 
 const existeUsuarioId = async(id = '') => {
-    
+
     const isId = await Usuario.findById(id);
     if (!isId) {
         throw new Error(`El id no existe ${ id }`);
@@ -38,9 +39,21 @@ const existeCategoriaId = async (id = '') => {
 
 }
 
+const existeCategoria = async (name = '') => {
+
+    const isCategory = await Categoria.findOne({ name });
+
+    // Validar de que la categoria exista en la base de datos
+    if (!isCategory) {
+        throw new Error(`La categoria ${ name } no existe en la base de datos`)
+    }
+
+}
+
 module.exports = {
     esRolValido,
     emailExiste,
     existeUsuarioId,
-    existeCategoriaId
+    existeCategoriaId,
+    existeCategoria
 }
