@@ -5,6 +5,7 @@ const { existeCategoria, existeProductoId } = require('../helpers/db-validators'
 
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
+const { esAdminRole } = require('../middlewares/validar-roles');
 
 const router = Router();
 
@@ -31,11 +32,18 @@ router.post('/', [
 
 // Actualizar la informacion de un producto - privado
 router.put('/:id', [
+    validarJWT,
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom(existeProductoId),
     validarCampos
 ], actualizarProducto);
 
 // Eliminar un producto - privado
 router.delete('/:id', [
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom(existeProductoId),
     validarCampos
 ], eliminarProducto);
 

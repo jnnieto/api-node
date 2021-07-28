@@ -68,10 +68,44 @@ const crearProducto = async (req = request, res = response) => {
 
 const actualizarProducto = async (req = request, res = response) => {
 
+    const { id } = req.params;
+    const { name, ...resto } = req.body;
+
+    const nombreCapitalizado = name.charAt(0).toUpperCase() + name.slice(1);
+    
+    const data = {
+        name: nombreCapitalizado,
+        price: resto.price,
+        description: resto.description,
+        user: req.usuario._id
+    }
+
+    const producto = await Producto.findByIdAndUpdate(id, data)
+                                                    .populate('user', 'name')
+                                                    .populate('category', 'name')
+
+    res.json({
+        msg: "Producto actulizado correctamente",
+        producto
+    })
 }
 
 const eliminarProducto = async (req = request, res = response) => {
 
+    const { id } = req.params;
+
+    const data = {
+        state: false,
+        user: req.usuario._id
+    }
+
+    const producto = await Producto.findByIdAndUpdate(id, data);
+
+    res.json({
+        msg: 'Producto inhabilitado correctamente',
+        producto
+    })
+    
 }
 
 module.exports = {
