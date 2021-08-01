@@ -44,10 +44,9 @@ const crearProducto = async (req = request, res = response) => {
 
     const categoryObj = await Categoria.findOne({ name: category });
 
-
     // Generar la data a guardar
     const data = {
-        name,
+        name: name.charAt(0).toUpperCase() + name.slice(1),
         user: req.usuario._id,
         price,
         category: categoryObj._id,
@@ -69,18 +68,15 @@ const crearProducto = async (req = request, res = response) => {
 const actualizarProducto = async (req = request, res = response) => {
 
     const { id } = req.params;
-    const { name, ...resto } = req.body;
+    const { state, user, ...data } = req.body;
 
-    const nombreCapitalizado = name.charAt(0).toUpperCase() + name.slice(1);
-    
-    const data = {
-        name: nombreCapitalizado,
-        price: resto.price,
-        description: resto.description,
-        user: req.usuario._id
+    if (data.name) {
+        data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
     }
+    
+    data.usuario = req.usuario._id;
 
-    const producto = await Producto.findByIdAndUpdate(id, data)
+    const producto = await Producto.findByIdAndUpdate(id, data, {new: true})
                                                     .populate('user', 'name')
                                                     .populate('category', 'name')
 
